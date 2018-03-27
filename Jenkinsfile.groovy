@@ -1,3 +1,6 @@
+#!/usr/bin/env groovy
+package multi
+
 def branch = 'master'
 def repoUrl = 'https://github.com/jglick/simple-maven-project-with-tests.git'
 def mavenHome
@@ -68,9 +71,10 @@ try {
                         if (params.SKIP_TEST != 'true') {
                             echo 'About to run unit test'
                             sh "${mavenHome}/bin/mvn test"
+                            junit './surefire-reports/*.xml'
                         } else {
                             echo 'Unit test skipped'
-                            }
+                        }
                         // }
                     },
                     autotest: {
@@ -104,4 +108,3 @@ try {
     /* Rethrow to fail the Pipeline properly */
     throw exc
 }
-
