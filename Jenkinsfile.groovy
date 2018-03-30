@@ -1,8 +1,5 @@
-#!/usr/bin/env groovy
-package multi
-
-def branch = 'develop'
-def repoUrl = 'https://github.com/jglick/simple-maven-project-with-tests.git'
+def branch = 'master'
+def repoUrl = 'https://github.com/addozhang/simple-maven-project-with-tests.git'
 def mavenHome
 
 properties([
@@ -11,28 +8,8 @@ properties([
                 choice(name: 'SKIP_TEST', defaultValue: 'true', choices: "true\nfalse", description: ''),
                 string(name: 'VERSION', defaultValue: '', description: ''),
                 string(name: 'HOT_FIX_BRANCH', defaultValue: '', description: ''),
-                //Load branches from scm
-                parameters([
-                        [$class: 'GitParameterDefinition',
-                         branch: '',
-                         branchFilter: '.*',
-                         defaultValue: '',
-                         description: 'Branch to build',
-                         name: 'BRANCH',
-                         quickFilterEnabled: true,
-                         selectedValue: 'NONE',
-                         sortMode: 'DESCENDING_SMART',
-                         tagFilter: '*',
-                         type: 'PT_BRANCH']
-                ]),
         ])
 ])
-
-environment {
-    //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
-    IMAGE = readMavenPom().getArtifactId()
-    VERSION = readMavenPom().getVersion()
-}
 
 try {
     node('master') {
@@ -91,10 +68,9 @@ try {
                         if (params.SKIP_TEST != 'true') {
                             echo 'About to run unit test'
                             sh "${mavenHome}/bin/mvn test"
-                            junit './surefire-reports/*.xml'
                         } else {
                             echo 'Unit test skipped'
-                        }
+                            }
                         // }
                     },
                     autotest: {
@@ -128,3 +104,4 @@ try {
     /* Rethrow to fail the Pipeline properly */
     throw exc
 }
+
