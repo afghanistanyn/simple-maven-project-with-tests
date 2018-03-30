@@ -1,5 +1,5 @@
 def branch = 'master'
-def repoUrl = 'https://github.com/jglick/simple-maven-project-with-tests.git'
+def repoUrl = 'https://github.com/addozhang/simple-maven-project-with-tests.git'
 def mavenHome
 
 properties([
