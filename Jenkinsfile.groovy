@@ -27,13 +27,13 @@ try {
             }
             if (params.ENV == 'stage') {
                 try {
-                    timeout(time: 15, unit: 'SECONDS') {
+                    //timeout(time: 15, unit: 'SECONDS') {
                         input message: '确定要发布吗',
                                 parameters: [[$class      : 'BooleanParameterDefinition',
                                               defaultValue: false,
                                               description : '点击将会发布Stage',
                                               name        : '发布Stage']]
-                    }
+                    //}
                 } catch (err) {
                     def user = err.getCauses()[0].getUser()
                     error "Aborted by:\n ${user}"
